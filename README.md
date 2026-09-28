@@ -13,7 +13,7 @@ Este repositório contém o desenvolvimento de duas tarefas independentes de Apr
 
 ---
 
-## 🗂️ Estrutura do Repositório
+##  Estrutura do Repositório
 
 *   `aneel_classificacao_orange.csv`: Base de dados de empreendimentos de geração (ANEEL).
 *   `meteo_regressao_orange.csv`: Base de dados meteorológicos horários (Open-Meteo).
