@@ -55,16 +55,16 @@ pip install pandas numpy scikit-learn matplotlib seaborn requests
 *   **Padronização:** Aplicado o `StandardScaler` nos dados de treino (e replicado no teste) para os algoritmos sensíveis à escala (ex: KNN, SVM ou Regressão Logística).
 
 ### Resultados e Comparação
-As métricas multiclasse abaixo foram calculadas utilizando a média **[inserir aqui: ex: macro ou weighted]**:
+As métricas multiclasse abaixo foram calculadas utilizando a média **macro**:
 
 | Algoritmo | Acurácia (Accuracy) | Precisão (Precision) | Revocação (Recall) | F1-Score |
 | :--- | :---: | :---: | :---: | :---: |
-| **Algoritmo 1 (Ex: KNN)** | *0.XX* | *0.XX* | *0.XX* | *0.XX* |
-| **Algoritmo 2 (Ex: Random Forest)** | *0.XX* | *0.XX* | *0.XX* | *0.XX* |
-| **Algoritmo 3 (Ex: Gradient Boosting)**| *0.XX* | *0.XX* | *0.XX* | *0.XX* |
+| **Regressão Logística** | 0.7964 | 0.8003 | 0.7968 | 0.7933 |
+| **KNN (k=5)** | 0.9652 | 0.9663 | 0.9636 | 0.9648 |
+| **Random Forest** | 0.9742 | 0.9754 | 0.9727 | 0.9739 |
 
 ### Análise e Conclusões da Tarefa 1
-*   **Matriz de Confusão:** *[Descreva aqui brevemente quais classes foram mais confundidas. Exemplo: Houve maior confusão entre usinas Solares e Eólicas devido à sobreposição de regiões geográficas no Nordeste?]*
+*   **Matriz de Confusão:** No modelo Random Forest, a maior confusão identificada foi de 7 empreendimentos da classe **Solar** previstos como **Hidráulica**.
 *   **Limitações do Modelo:** Prever a fonte energética utilizando exclusivamente coordenadas e potência possui limitações severas. O modelo ignora fatores fundamentais como a topografia e hidrografia (críticas para hidráulicas), o regime de ventos de alta altitude (essencial para eólicas) e o direcionamento/índice de irradiância local. Portanto, clusters puramente espaciais não capturam totalmente a complexidade da escolha da engenharia da usina.
 
 ---
@@ -86,11 +86,12 @@ As métricas multiclasse abaixo foram calculadas utilizando a média **[inserir 
 
 | Algoritmo | MAE (\(W/m^2\)) | MSE (\((W/m^2)^2\)) | \(R^2\) Score |
 | :--- | :---: | :---: | :---: |
-| **Algoritmo 1 (Ex: Regressão Linear)** | *X.XX* | *X.XX* | *0.XX* |
-| **Algoritmo 2 (Ex: Decision Tree)** | *X.XX* | *X.XX* | *0.XX* |
-| **Algoritmo 3 (Ex: XGBoost)** | *X.XX* | *X.XX* | *0.XX* |
+| **Regressão Linear** | 145.2049 | 30034.2011 | 0.3598 |
+| **Random Forest** | 67.1746 | 7468.9354 | 0.8408 |
+| **Gradient Boosting** | 67.6205 | 7524.8326 | 0.8396 |
 
 ### Análise e Conclusões da Tarefa 2
+*   **Comparação dos Modelos:** O Random Forest apresentou R² de 0.8408, MAE de 67.1746 W/m² e MSE de 7468.9354 (W/m²)². Entre os modelos avaliados, esses resultados correspondem ao maior R² e ao menor MAE e MSE.
 *   **O papel da Hora do Dia:** A variável `hora` é o preditor mais crítico do modelo, pois dita o ângulo zenital solar. Mesmo em dias completamente limpos ou nublados, o teto máximo de radiação disponível é rigidamente delimitado pelo horário (curva senoidal ao longo do dia, com pico por volta do meio-dia).
 *   **Radiação Média vs. Geração Elétrica:** Estimar a radiação que atinge o solo **não equivale** a prever a geração elétrica de uma usina fotovoltaica. A conversão final depende de fatores físicos e operacionais não incluídos no dataset, tais como:
     *   Eficiência nominal dos módulos fotovoltaicos e inversores.
