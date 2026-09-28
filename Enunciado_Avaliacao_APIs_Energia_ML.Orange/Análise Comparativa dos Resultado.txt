@@ -1,0 +1,28 @@
+ # Análise Comparativa dos Resultados (Orange)
+
+## Procedimento de Avaliação Geral
+O processo de validação foi executado de forma consistente para ambas as tarefas utilizando a ferramenta **Test and Score** do Orange, alimentada por atributos previamente isolados no nó **Select Columns**.
+
+---
+
+## Tarefa 1: Classificação (Alvo: `fonte`)
+O objetivo desta tarefa é classificar o tipo de empreendimento energético em **Solar, Eólica ou Hidráulica** com base em três atributos de entrada: `potencia_kw`, `latitude` e `longitude`.
+
+* **Algoritmos Utilizados:** Regressão Logística (*Logistic Regression*) e kNN (*k-Nearest Neighbors*, com \(k=5\)).
+* **Métricas Analisadas:** Acurácia Geral (*Accuracy*) e Recall (Taxa de Acerto por classe) via Matriz de Confusão.
+
+###  Desempenho Obtido
+* **kNN (Superior):** Alcançou uma **Acurácia Geral de 91,85%** (3.560 acertos de 3.876). Mostrou-se extremamente equilibrado, mantendo o Recall individual acima de **91%** para todas as fontes. Captura muito bem as fronteiras regionais e não lineares.
+* **Regressão Logística:** Obteve uma **Acurácia Geral de 80,62%** (3.125 acertos de 3.876). Apresentou uma falha crítica na classe **Solar**, com Recall de apenas **65,92%**, confundindo incorretamente 300 instâncias de usinas solares como eólicas.
+
+---
+
+##  Tarefa 2: Regressão (Alvo: `radiacao_w_m2`)
+O objetivo é estimar numericamente a radiação solar horizontal média em Petrolina (PE) usando cinco variáveis: `temperatura_c`, `umidade_pct`, `nuvens_pct`, `vento_kmh` e `hora`.
+
+* **Algoritmos Utilizados:** Regressão Linear (*Linear Regression*) e Árvore de Decisão (*Tree Learner*).
+* **Métricas Analisadas:** MAE (Erro Absoluto Médio), MSE (Erro Quadrático Médio) e \(R^2\) (Coeficiente de Determinação) através do nó *Predictions*.
+
+###  Desempenho Obtido
+* **Árvore de Decisão (Superior):** Por ser um algoritmo não linear, obteve erros menores (**MAE/MSE**) e o melhor coeficiente **\(R^2\)**. O modelo consegue segmentar as quebras de condições meteorológicas e mapear com sucesso o comportamento em formato de "sino" que a variável `hora` assume ao longo do dia.
+* **Regressão Linear:** Apresentou o pior desempenho da tarefa. Como tenta traçar apenas relações em linha reta, o modelo falha severamente ao tentar aproximar a curva natural da radiação solar (que sobe e desce de forma não linear conforme o horário do dia), resultando em resíduos (erros) elevados.
